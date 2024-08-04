@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haileeee</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Add basic styles for error messages */
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+    /* Style for show password eye icon */
+    .password-container {
+      position: relative;
+      width: 100%;
+    }
+    .password-container input {
+      width: calc(100% - 30px); /* Adjust width for eye icon */
+    }
+    .password-container .eye-icon {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+    /* Change color of the 'Forgot password?' and 'Register' links to black */
+    .show-password-container a,
+    .register a {
+      color: black;
+    }
+
+    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap");
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Open Sans", sans-serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      width: 100%;
+      padding: 0 10px;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url("https://r4.wallpaperflare.com/wallpaper/967/10/424/hailee-steinfeld-women-looking-at-viewer-women-outdoors-wallpaper-caea7b8b9dd8ae1c25e2e043e6ebd0d2.jpg"), #000;
+      background-position: center;
+      background-size: cover;
+    }
+
+    .wrapper {
+      width: 330px;
+      border-radius: 6px;
+      padding: 25px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .input-field {
+      position: relative;
+      border-bottom: 2px solid #ccc;
+      margin: 15px 0;
+    }
+
+    .input-field label {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      color: #000000;
+      font-size: 16px;
+      pointer-events: none;
+      transition: 0.15s ease;
+    }
+
+    .input-field input {
+      width: 100%;
+      height: 40px;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      color: #080808;
+    }
+
+    .input-field input:focus~label,
+    .input-field input:valid~label {
+      font-size: 0.8rem;
+      top: 10px;
+      transform: translateY(-120%);
+    }
+
+    .forget {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 25px 0 35px 0;
+      color: #000000;
+    }
+
+    #remember {
+      accent-color: #000000;
+    }
+
+    .forget label {
+      display: flex;
+      align-items: center;
+    }
+
+    .forget label p {
+      margin-left: 8px;
+    }
+
+    .wrapper a {
+      color: #000000; /* Change link color to black */
+      text-decoration: none;
+    }
+
+    .wrapper a:hover {
+      text-decoration: underline;
+    }
+
+    button {
+      background: #1d59ff;
+      color: #000;
+      font-weight: 600;
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 16px;
+      border: 2px solid transparent;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      color: #0921fa;
+      border-color: #f0b0b0;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .register {
+      text-align: center;
+      margin-top: 30px;
+      color: #000000;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper"> 
+    <form id="loginForm" action="#">
+      <h2>Login</h2>
+      <div class="input-field">
+        <input type="text" id="email" required>
+        <label for="email">Enter your email</label>
+        <div id="emailError" class="error"></div>
+      </div>
+      <div class="input-field password-container">
+        <input type="password" id="password" required>
+        <label for="password">Enter your password</label>
+        <i class="fas fa-eye eye-icon" id="togglePassword"></i>
+        <div id="passwordError" class="error"></div>
+      </div><br>
+      <div class="show-password-container">
+        <label for="remember">
+          <input type="checkbox" id="remember">
+          <p>Remember me</p><br>
+        </label>
+        <a href="#">Forgot password?</a>
+      </div><br>
+      <button type="submit">Log In</button>
+      <div class="register">
+        <p>Don't have an account? <a href="#">Register</a></p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      // Prevent the default form submission
+      event.preventDefault();
+      
+      // Clear previous error messages
+      document.getElementById('emailError').textContent = '';
+      document.getElementById('passwordError').textContent = '';
+
+      // Get form values
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Define regular expressions
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+
+      // Validate email
+      if (!emailPattern.test(email)) {
+        document.getElementById('emailError').textContent = 'Invalid email format.';
+        return; // Stop execution if email is invalid
+      }
+
+      // Validate password
+      if (!passwordPattern.test(password)) {
+        document.getElementById('passwordError').textContent = 'Password must be at least 6 characters long, contain at least one number, one uppercase and one lowercase letter.';
+        return; // Stop execution if password is invalid
+      }
+
+      // If both validations pass
+      alert('Login successful!');
+      // You can now submit the form or redirect the user as needed
+      // For example: this.submit(); // Uncomment to submit the form
+    });
+
+    // Show/Hide password functionality
+    document.getElementById('togglePassword').addEventListener('click', function() {
+      const passwordField = document.getElementById('password');
+      const type = passwordField.type === 'password' ? 'text' : 'password';
+      passwordField.type = type;
+      this.classList.toggle('fa-eye', type === 'password');
+      this.classList.toggle('fa-eye-slash', type === 'text');
+    });
+  </script>
+</body>
+</html>
